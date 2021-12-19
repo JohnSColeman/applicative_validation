@@ -1,29 +1,31 @@
 part of applicative_validation_framework;
 
-/// non-empty immutable list
+/// Non-empty immutable list
 typedef Neil<A> = Cons<A>;
 
+/// Either left non-empty immutable list and right type A
 typedef ValidatedNeil<E, A> = Either<Neil<E>, A>;
 
-const Either<ArgumentError, Unit> validUnit = Right(unit);
+// A Valid of unit
+const Either<ArgumentError, Unit> _validUnit = Right(unit);
 
 /// Helper methods for combining a number of different validations.
 ///
-/// Argument errors are accumulated for the left inputs otherwise the results
-/// of the right inputs are applied to the z function to yield a Z.
+/// ArgumentErrors are accumulated on the left otherwise the results
+/// of the right are applied to the z function to yield a Z.
 ValidatedNeil<ArgumentError, Z> validate2<A, B, Z>(
         Validated<A> a, Validated<B> b, Z Function(A, B) z) =>
     _apply(
         a,
         b,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
         (A a, B b, _, __, ___, ____, _____, ______, _______, _________) =>
             z(a, b));
 
@@ -33,13 +35,13 @@ ValidatedNeil<ArgumentError, Z> validate3<A, B, C, Z>(Validated<A> a,
         a,
         b,
         c,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
         (A a, B b, C c, __, ___, ____, _____, ______, _______, _________) =>
             z(a, b, c));
 
@@ -54,12 +56,12 @@ ValidatedNeil<ArgumentError, Z> validate4<A, B, C, D, Z>(
         b,
         c,
         d,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
         (A a, B b, C c, D d, ___, ____, _____, ______, _______, _________) =>
             z(a, b, c, d));
 
@@ -76,11 +78,11 @@ ValidatedNeil<ArgumentError, Z> validate5<A, B, C, D, E, Z>(
         c,
         d,
         e,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
         (A a, B b, C c, D d, E e, ____, _____, ______, _______, _________) =>
             z(a, b, c, d, e));
 
@@ -99,10 +101,10 @@ ValidatedNeil<ArgumentError, Z> validate6<A, B, C, D, E, F, Z>(
         d,
         e,
         f,
-        validUnit,
-        validUnit,
-        validUnit,
-        validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
         (A a, B b, C c, D d, E e, F f, _____, ______, _______, _________) =>
             z(a, b, c, d, e, f));
 
@@ -123,9 +125,9 @@ ValidatedNeil<ArgumentError, Z> validate7<A, B, C, D, E, F, G, Z>(
         e,
         f,
         g,
-        validUnit,
-        validUnit,
-        validUnit,
+        _validUnit,
+        _validUnit,
+        _validUnit,
         (A a, B b, C c, D d, E e, F f, G g, ______, _______, _________) =>
             z(a, b, c, d, e, f, g));
 
@@ -148,8 +150,8 @@ ValidatedNeil<ArgumentError, Z> validate8<A, B, C, D, E, F, G, H, Z>(
         f,
         g,
         h,
-        validUnit,
-        validUnit,
+        _validUnit,
+        _validUnit,
         (A a, B b, C c, D d, E e, F f, G g, H h, _______, _________) =>
             z(a, b, c, d, e, f, g, h));
 
@@ -174,7 +176,7 @@ ValidatedNeil<ArgumentError, Z> validate9<A, B, C, D, E, F, G, H, I, Z>(
         g,
         h,
         i,
-        validUnit,
+        _validUnit,
         (A a, B b, C c, D d, E e, F f, G g, H h, I i, _________) =>
             z(a, b, c, d, e, f, g, h, i));
 

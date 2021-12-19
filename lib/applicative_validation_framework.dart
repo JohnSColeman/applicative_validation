@@ -1,7 +1,7 @@
 library applicative_validation_framework;
 
-import 'package:applicative_validation/applicative_validation_specs.dart';
 import 'package:dartz/dartz.dart';
+import 'applicative_validation_render.dart';
 
 part 'src/framework/applicative_validation.dart';
 

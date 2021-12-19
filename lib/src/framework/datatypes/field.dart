@@ -1,19 +1,31 @@
 part of applicative_validation_framework;
 
-/// Encapsulates the properties of a field and domain of its value,
-/// where A is the underlying type of the validated data and name identifies
-/// the field - could be a language key or value for logging.
+/// Encapsulates the properties of a field and the type of its value
+///
+/// A is the underlying type of the validated data
+/// name identifies the field - could be a language key or value for logging
 class Field<A> {
   final String _name;
-  final Validated<A> Function(Field<A>, A) _validation;
 
+  /// this fields validation
+  final Validated<A> Function(String, A) _validation;
+
+  /// this fields name
   String get name => _name;
 
   Field({required name, required validation})
       : _name = name,
         _validation = validation;
 
+  /// create a copy of this field with an alias name
+  Field alias(String alias) => Field(name: alias, validation: _validation);
+
   /// returns a validated for the given field value
-  Validated<A> validate(A? value) => requiredValue(this, value)
-      .flatMap((valid) => _validation(this, valid));
+  Validated<A> validate(A? value) {
+    final Validated<A> required = value != null
+        ? right(value)
+        : left(ArgumentError.value(
+            null, name, ErrorArgumentsBinding("required.err", {})));
+    return required.flatMap((valid) => _validation(name, valid));
+  }
 }
