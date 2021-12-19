@@ -18,7 +18,7 @@ class Field<A> {
         _validation = validation;
 
   /// create a copy of this field with an alias name
-  Field alias(String alias) => Field(name: alias, validation: _validation);
+  Field<A> alias(String alias) => Field<A>(name: alias, validation: _validation);
 
   /// returns a validated for the given field value
   Validated<A> validate(A? value) {
