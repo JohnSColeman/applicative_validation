@@ -1,21 +1,22 @@
 import 'package:applicative_validation/applicative_validation_framework.dart';
 import 'package:applicative_validation/applicative_validation_specs.dart';
 
-Validated<String> passwordValidation(Field<String> field, String value) =>
-    minLength(field, value, 8) &
-    maxLength(field, value, 12) &
-    noWhiteSpace(field, value) &
-    nonRepeating(field, value);
-
 final usernameField = Field<String>(
     name: "username",
-    validation: (Field<String> field, String value) =>
-        minLength(field, value, 8) &
-        maxLength(field, value, 15) &
-        noWhiteSpace(field, value) &
-        alphaNumeric(field, value));
+    validation: (String fieldName, String value) =>
+        minLength(fieldName, value, 8) &
+        maxLength(fieldName, value, 15) &
+        noWhiteSpace(fieldName, value) &
+        alphaNumeric(fieldName, value));
 
 final passwordField = Field<String>(
     name: "password",
-    validation: (Field<String> field, String value) =>
-        passwordValidation(field, value));
+    validation: (String fieldName, String value) =>
+        minLength(fieldName, value, 8) &
+        maxLength(fieldName, value, 12) &
+        noWhiteSpace(fieldName, value) &
+        nonRepeating(fieldName, value));
+
+final newPassword1Field = passwordField.alias("newPassword1");
+
+final newPassword2Field = passwordField.alias("newPassword2");
