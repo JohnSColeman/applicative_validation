@@ -7,8 +7,8 @@ part of applicative_validation_framework;
 class Field<A> {
   final String _name;
 
-  /// this fields validation
-  final Iterable<Validated<A> Function(NameValue)> _validation;
+  /// this fields validations
+  final Iterable<Validation<A>> _validation;
 
   /// this fields name
   String get name => _name;

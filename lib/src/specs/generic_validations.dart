@@ -1,6 +1,6 @@
 part of applicative_validation_specs;
 
-Validated<String> Function(NameValue) notEmpty() {
+Validation<String> notEmpty() {
   return (NameValue nameValue) => nameValue.value.trim().isNotEmpty
       ? right(nameValue.value)
       : left(
@@ -12,7 +12,7 @@ Validated<String> Function(NameValue) notEmpty() {
         );
 }
 
-Validated<String> Function(NameValue) alphaNumeric() {
+Validation<String> alphaNumeric() {
   final validCharacters = RegExp(r'^[a-zA-Z0-9]+$');
   return (NameValue nameValue) =>
       validCharacters.hasMatch(nameValue.value) || nameValue.value.isEmpty
@@ -26,7 +26,7 @@ Validated<String> Function(NameValue) alphaNumeric() {
             );
 }
 
-Validated<String> Function(NameValue) noWhiteSpace() {
+Validation<String> noWhiteSpace() {
   return (NameValue nameValue) => !nameValue.value.contains(" ")
       ? right(nameValue.value)
       : left(
@@ -38,7 +38,7 @@ Validated<String> Function(NameValue) noWhiteSpace() {
         );
 }
 
-Validated<String> Function(NameValue) nonRepeating() {
+Validation<String> nonRepeating() {
   final validCharacters = RegExp(r'^(?:(.)(?!\1\1))+$');
   return (NameValue nameValue) =>
       validCharacters.hasMatch(nameValue.value) || nameValue.value.isEmpty
@@ -55,7 +55,7 @@ Validated<String> Function(NameValue) nonRepeating() {
             );
 }
 
-Validated<String> Function(NameValue) minLength(int length) {
+Validation<String> minLength(int length) {
   return (NameValue nameValue) => nameValue.value.length >= length
       ? right(nameValue.value)
       : left(
@@ -68,7 +68,7 @@ Validated<String> Function(NameValue) minLength(int length) {
         );
 }
 
-Validated<String> Function(NameValue) maxLength(int length) {
+Validation<String> maxLength(int length) {
   return (NameValue nameValue) => nameValue.value.length <= length
       ? right(nameValue.value)
       : left(
