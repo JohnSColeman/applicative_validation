@@ -1,5 +1,6 @@
 part of applicative_validation_framework;
 
+/// Represents a name and value pair.
 class NameValue<A> {
   final String _name;
   final A _value;
@@ -9,6 +10,8 @@ class NameValue<A> {
   String get name => _name;
 
   A get value => _value;
+
+  NameValue of(A value) => NameValue(_name, value);
 
   @override
   bool operator ==(Object other) =>
