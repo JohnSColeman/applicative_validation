@@ -2,8 +2,8 @@ part of applicative_validation_render;
 
 /// Extends argument error to work with the domain framework.
 extension ArgumentErrorRenderer on ArgumentError {
-  /// transforms this argument error with error arguments bindings values
-  /// to an immutable list of strings for human readability
+  /// transforms this ArgumentError with ErrorArgumentsBindings values
+  /// to an immutable list of Strings for human readability
   IList<String> renderToList(
       String Function(ErrorArgumentsBinding) renderBinding) {
     if (message is List) {
@@ -13,7 +13,7 @@ extension ArgumentErrorRenderer on ArgumentError {
     return IList.from([renderBinding(message as ErrorArgumentsBinding)]);
   }
 
-  /// collects the named args of this argument error with error arguments bindings values
+  /// collects the named args of this ArgumentError with ErrorArgumentsBindings values
   Map<String, String> collectNamedArgs() {
     if (message is List) {
       return (message as List).fold<Map<String, String>>(
@@ -24,7 +24,7 @@ extension ArgumentErrorRenderer on ArgumentError {
   }
 }
 
-/// Render argument errors of the given validated non-empty immutable list
+/// Render argument errors of the given validated Non-empty immutable list
 /// using the given render binding function. Use for rendering outputs from an
 /// applicative domain validate.
 Either<List<String>, Z> renderValidatedNeil<Z>(

@@ -7,8 +7,10 @@ class ErrorArgumentsBinding {
   final String _key;
   final Map<String, String> _namedArgs;
 
+  /// key
   String get key => _key;
 
+  /// named args
   Map<String, String> get namedArgs => _namedArgs;
 
   ErrorArgumentsBinding(this._key, this._namedArgs);

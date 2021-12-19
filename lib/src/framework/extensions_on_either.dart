@@ -2,7 +2,7 @@ part of applicative_validation_framework;
 
 /// Extension methods to give Either behaviours like Validated
 extension EitherSemigroupApplicative<E, A> on Either<E, A> {
-  /// combines this either and the other either using the given semigroup
+  /// combines this Either and other Either using the given semigroup
   Either<E, B> aps<B>(Either<E, B Function(A)> other, Semigroup<E> ee) {
     if (isRight() && other.isRight()) {
       return right(((other as Right).value as B Function(
@@ -18,7 +18,7 @@ extension EitherSemigroupApplicative<E, A> on Either<E, A> {
     return other.map((a) => a((this as Right).value as A));
   }
 
-  /// transforms this either to an either with new types using given functions
+  /// transforms this Either to an Either with new types using given functions
   Either<E2, A2> bimap<E2, A2>(E2 Function(E) fe, A2 Function(A) fa) =>
       fold((e) => left(fe(e)), (a) => right(fa(a)));
 }

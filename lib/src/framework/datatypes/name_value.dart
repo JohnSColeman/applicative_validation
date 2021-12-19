@@ -7,10 +7,13 @@ class NameValue<A> {
 
   NameValue(this._name, this._value);
 
+  /// name
   String get name => _name;
 
+  /// value
   A get value => _value;
 
+  /// creates a copy of this NameValue with the given value
   NameValue of(A value) => NameValue(_name, value);
 
   @override
