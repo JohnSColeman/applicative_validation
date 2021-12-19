@@ -3,19 +3,11 @@ import 'package:applicative_validation/applicative_validation_specs.dart';
 
 final usernameField = Field<String>(
     name: "username",
-    validation: (String fieldName, String value) =>
-        minLength(fieldName, value, 8) &
-        maxLength(fieldName, value, 15) &
-        noWhiteSpace(fieldName, value) &
-        alphaNumeric(fieldName, value));
+    validation: [minLength(8), maxLength(15), noWhiteSpace(), alphaNumeric()]);
 
 final passwordField = Field<String>(
     name: "password",
-    validation: (String fieldName, String value) =>
-        minLength(fieldName, value, 8) &
-        maxLength(fieldName, value, 12) &
-        noWhiteSpace(fieldName, value) &
-        nonRepeating(fieldName, value));
+    validation: [minLength(8), maxLength(12), noWhiteSpace(), nonRepeating()]);
 
 final newPassword1Field = passwordField.alias("newPassword1");
 

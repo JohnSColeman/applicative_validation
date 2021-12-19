@@ -8,7 +8,7 @@ class Field<A> {
   final String _name;
 
   /// this fields validation
-  final Validated<A> Function(String, A) _validation;
+  final Iterable<Validated<A> Function(NameValue)> _validation;
 
   /// this fields name
   String get name => _name;
@@ -18,7 +18,8 @@ class Field<A> {
         _validation = validation;
 
   /// create a copy of this field with an alias name
-  Field<A> alias(String alias) => Field<A>(name: alias, validation: _validation);
+  Field<A> alias(String alias) =>
+      Field<A>(name: alias, validation: _validation);
 
   /// returns a validated for the given field value
   Validated<A> validate(A? value) {
@@ -26,6 +27,8 @@ class Field<A> {
         ? right(value)
         : left(ArgumentError.value(
             null, name, ErrorArgumentsBinding("required.err", {})));
-    return required.flatMap((valid) => _validation(name, valid));
+    return required.flatMap((valid) => _validation
+        .map((e) => e(NameValue(_name, valid)))
+        .reduce((value, element) => value & element));
   }
 }
