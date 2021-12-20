@@ -13,8 +13,10 @@ ValidatedNeil<ArgumentError, ChangePasswordRequest> validatePasswordChange(
         usernameField.validate(username),
         passwordField.validate(password),
         newPassword1Field.validate(newPassword1) &
-            notMatch2("newPassword1", "password", newPassword1, password),
+            notEqual(NameValue("newPassword1", newPassword1),
+                NameValue("password", password)),
         newPassword2Field.validate(newPassword2) &
-            match2("newPassword2", "newPassword1", newPassword2, newPassword1),
+            equal(NameValue("newPassword2", newPassword2),
+                NameValue("newPassword1", newPassword1)),
         (u, p, p1, p2) => ChangePasswordRequest(
             username: u, password: p, newPassword1: p1, newPassword2: p2));
