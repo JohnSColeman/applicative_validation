@@ -25,7 +25,7 @@ Widget changePasswordForm(BuildContext context, String? username,
           decoration: InputDecoration(
               labelText: 'Username', errorText: tre(errors?.of("username"))),
           inputFormatters: [LengthLimitingTextInputFormatter(15)],
-          validator: (value) => trv(usernameField.validate(value)),
+          validator: (value) => trv(usernameField(value)),
           onSaved: (value) => cubit.changeUsername(value!)),
       TextFormField(
           initialValue: password,
@@ -34,7 +34,7 @@ Widget changePasswordForm(BuildContext context, String? username,
               errorText: tre(errors?.of("password"))),
           inputFormatters: [LengthLimitingTextInputFormatter(12)],
           validator: (value) =>
-              trvk("password.err", passwordField.validate(value)),
+              trvk("password.err", passwordField(value)),
           onSaved: (value) => cubit.changePassword(value!)),
       TextFormField(
           initialValue: password1,
@@ -43,7 +43,7 @@ Widget changePasswordForm(BuildContext context, String? username,
               errorText: tre(errors?.of("newPassword1"))),
           inputFormatters: [LengthLimitingTextInputFormatter(12)],
           validator: (value) =>
-              trvk("password.err", newPassword1Field.validate(value)),
+              trvk("password.err", newPassword1Field(value)),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           onSaved: (value) => cubit.changePassword1(value!)),
       TextFormField(
@@ -53,7 +53,7 @@ Widget changePasswordForm(BuildContext context, String? username,
               errorText: tre(errors?.of("newPassword2"))),
           inputFormatters: [LengthLimitingTextInputFormatter(12)],
           validator: (value) =>
-              trvk("password.err", newPassword2Field.validate(value)),
+              trvk("password.err", newPassword2Field(value)),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           onSaved: (value) => cubit.changePassword2(value!)),
     ],

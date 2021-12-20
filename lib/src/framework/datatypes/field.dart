@@ -22,7 +22,7 @@ class Field<A> {
       Field<A>(name: alias, validation: _validation);
 
   /// returns a validated for the given field value
-  Validated<A> validate(A? value) {
+  Validated<A> call(A? value) {
     final Validated<A> required = value != null
         ? right(value)
         : left(ArgumentError.value(
