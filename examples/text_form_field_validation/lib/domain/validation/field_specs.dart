@@ -3,7 +3,7 @@ import 'package:applicative_validation/applicative_validation_specs.dart';
 
 final usernameField = Field<String>(
     name: "username",
-    validation: [minLength(8), maxLength(15), noWhiteSpace(), alphaNumeric()]);
+    validation: [minLength(8), maxLength(15), noWhiteSpace(), alphanumeric()]);
 
 final passwordField = Field<String>(
     name: "password",
