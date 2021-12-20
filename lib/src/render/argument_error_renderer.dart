@@ -27,13 +27,13 @@ extension ArgumentErrorRenderer on ArgumentError {
 /// Render argument errors of the given validated Non-empty immutable list
 /// using the given render binding function. Use for rendering outputs from an
 /// applicative domain validate.
-Either<List<String>, Z> renderValidatedNeil<Z>(
-        ValidatedNeil<ArgumentError, Z> validatedNeil,
-        String Function(ErrorArgumentsBinding) renderBinding) =>
-    validatedNeil.bimap(
-        (errors) => errors
-            .map((error) =>
-                error.renderToList((binding) => renderBinding(binding)))
-            .flatMap(id)
-            .toList(),
-        id);
+// Either<List<String>, Z> renderValidatedNeil<Z>(
+//         ValidatedNeil<ArgumentError, Z> validatedNeil,
+//         String Function(ErrorArgumentsBinding) renderBinding) =>
+//     validatedNeil.bimap(
+//         (errors) => errors
+//             .map((error) =>
+//                 error.renderToList((binding) => renderBinding(binding)))
+//             .flatMap(id)
+//             .toList(),
+//         id);

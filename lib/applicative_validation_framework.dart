@@ -9,7 +9,7 @@ part 'src/framework/argument_error_semigroup.dart';
 
 part 'src/framework/datatypes/field.dart';
 
-part 'src/framework/datatypes/name_value.dart';
+part 'src/framework/datatypes/named.dart';
 
 part 'src/framework/datatypes/validated.dart';
 

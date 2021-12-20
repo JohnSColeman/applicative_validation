@@ -1,14 +1,20 @@
 part of applicative_validation_framework;
 
-/// Represents a name and value pair.
-class NameValue<A> {
+/// Abstract type with a name property.
+abstract class Named {
   final String _name;
-  final A _value;
 
-  NameValue(this._name, this._value);
+  Named(this._name);
 
   /// name
   String get name => _name;
+}
+
+/// Encapsulates a name and value pair.
+class NameValue<A> extends Named {
+  final A _value;
+
+  NameValue(String name, this._value): super(name);
 
   /// value
   A get value => _value;

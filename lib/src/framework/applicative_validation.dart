@@ -4,7 +4,7 @@ part of applicative_validation_framework;
 typedef Neil<A> = Cons<A>;
 
 /// Either left non-empty immutable list and right type A
-typedef ValidatedNeil<E, A> = Either<Neil<E>, A>;
+typedef ValidatedNeil<E, A> = Either<Neil<E>, A?>;
 
 // A Valid of unit
 const Either<ArgumentError, Unit> _validUnit = Right(unit);

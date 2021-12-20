@@ -3,10 +3,12 @@ import 'package:applicative_validation/applicative_validation_specs.dart';
 
 final usernameField = Field<String>(
     name: "username",
+    nullable: false,
     validation: [minLength(8), maxLength(15), noWhiteSpace(), alphanumeric()]);
 
 final passwordField = Field<String>(
     name: "password",
+    nullable: false,
     validation: [minLength(8), maxLength(12), noWhiteSpace(), nonRepeating()]);
 
 final newPassword1Field = passwordField.alias("newPassword1");

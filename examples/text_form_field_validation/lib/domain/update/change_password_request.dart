@@ -40,20 +40,6 @@ class ChangePasswordRequest {
         '}';
   }
 
-  ChangePasswordRequest copyWith({
-    String? username,
-    String? password,
-    String? newPassword1,
-    String? newPassword2,
-  }) {
-    return ChangePasswordRequest(
-      username: username ?? this.username,
-      password: password ?? this.password,
-      newPassword1: newPassword1 ?? this.newPassword1,
-      newPassword2: newPassword2 ?? this.newPassword2,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return {
       'username': username,

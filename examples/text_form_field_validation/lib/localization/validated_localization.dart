@@ -9,7 +9,7 @@ String? tre<A>(ArgumentError? error) => error
     .join(", ");
 
 /// creates an error message by joining each errors transformed error value
-String? trv<A>(Either<ArgumentError, A> validated) => validated.fold(
+String? trv<A>(Either<ArgumentError, A?> validated) => validated.fold(
     (error) => error
         .renderToList(
             (binding) => tr(binding.key, namedArgs: binding.namedArgs))
@@ -18,5 +18,5 @@ String? trv<A>(Either<ArgumentError, A> validated) => validated.fold(
     (a) => null);
 
 /// creates an error message using the given key with the collected named args from each error
-String? trvk<A>(String key, Either<ArgumentError, A> validated) => validated
+String? trvk<A>(String key, Either<ArgumentError, A?> validated) => validated
     .fold((error) => tr(key, namedArgs: error.collectNamedArgs()), (a) => null);

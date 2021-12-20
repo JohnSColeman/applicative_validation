@@ -7,6 +7,7 @@
   "alphanumeric.err": "all characters must alphanumeric",
   "minimum_length.err": "minimum length {minLength} characters",
   "maximum_length.err": "maximum length {maxlength} characters",
+  "equal_length.err": "length must be {maxlength} characters",
   "white_space.err": "remove spaces",
   "repeating.err": "don't repeat characters",
   "password.err": "must have between 8 and 15 characters without repeats or spaces",
@@ -14,6 +15,6 @@
   "user_not_found.err":  "submission failed - no such user",
   "user_invalid.err": "submission failed - invalid password",
   "io_error.err": "connection problem",
-  "not_match2.err": "@:{name1} should not be the same as @:{name2}",
-  "match2.err": "@:{name1} should be the same as @:{name2}"
+  "not_equal.err": "@:{name1} should not be the same as @:{name2}",
+  "equal.err": "@:{name1} should be the same as @:{name2}"
 }

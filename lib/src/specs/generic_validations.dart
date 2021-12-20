@@ -1,35 +1,35 @@
 part of applicative_validation_specs;
 
-Validation<String> notEmpty() {
-  return (NameValue<String> nameValue) => nameValue.value.trim().isNotEmpty
-      ? right(nameValue.value)
-      : left(
-          ArgumentError.value(
+final alphaPattern = RegExp(r'^[a-zA-Z]+$');
+final alphanumericPattern = RegExp(r'^[a-zA-Z0-9]+$');
+final integerPattern = RegExp(r'^(?:-?(?:0|[1-9][0-9]*))$');
+final emailPattern = RegExp(
+    r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+final repeatingPattern = RegExp(r'^(?:(.)(?!\1\1))+$');
+
+Validation<String> notEmpty() =>
+    (NameValue<String> nameValue) => nameValue.value.trim().isNotEmpty
+        ? right(nameValue.value)
+        : left(ArgumentError.value(
             nameValue.value,
             nameValue.name,
             ErrorArgumentsBinding("empty.err", {}),
-          ),
-        );
-}
+          ));
 
-Validation<String> alpha() {
-  final validCharacters = RegExp(r'^[a-zA-Z]+$');
-  return (NameValue<String> nameValue) =>
-      validCharacters.hasMatch(nameValue.value)
-          ? right(nameValue.value)
-          : left(
-              ArgumentError.value(
-                nameValue.value,
-                nameValue.name,
-                ErrorArgumentsBinding("alpha.err", {}),
-              ),
-            );
-}
+Validation<String> alpha() =>
+    (NameValue<String> nameValue) => alphaPattern.hasMatch(nameValue.value)
+        ? right(nameValue.value)
+        : left(
+            ArgumentError.value(
+              nameValue.value,
+              nameValue.name,
+              ErrorArgumentsBinding("alpha.err", {}),
+            ),
+          );
 
 Validation<String> alphanumeric() {
-  final validCharacters = RegExp(r'^[a-zA-Z0-9]+$');
   return (NameValue<String> nameValue) =>
-      validCharacters.hasMatch(nameValue.value)
+      alphanumericPattern.hasMatch(nameValue.value)
           ? right(nameValue.value)
           : left(
               ArgumentError.value(
@@ -41,9 +41,8 @@ Validation<String> alphanumeric() {
 }
 
 Validation<String> integer() {
-  final validCharacters = RegExp(r'^(?:-?(?:0|[1-9][0-9]*))$');
   return (NameValue<String> nameValue) =>
-      validCharacters.hasMatch(nameValue.value)
+      integerPattern.hasMatch(nameValue.value)
           ? right(nameValue.value)
           : left(
               ArgumentError.value(
@@ -67,9 +66,7 @@ Validation<String> creditCard() {
 }
 
 Validation<String> email() {
-  final validEmail = RegExp(
-      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
-  return (NameValue<String> nameValue) => validEmail.hasMatch(nameValue.value)
+  return (NameValue<String> nameValue) => emailPattern.hasMatch(nameValue.value)
       ? right(nameValue.value)
       : left(
           ArgumentError.value(
@@ -93,9 +90,8 @@ Validation<String> noWhiteSpace() {
 }
 
 Validation<String> nonRepeating() {
-  final validCharacters = RegExp(r'^(?:(.)(?!\1\1))+$');
   return (NameValue<String> nameValue) =>
-      validCharacters.hasMatch(nameValue.value) || nameValue.value.isEmpty
+      repeatingPattern.hasMatch(nameValue.value) || nameValue.value.isEmpty
           ? right(nameValue.value)
           : left(
               ArgumentError.value(

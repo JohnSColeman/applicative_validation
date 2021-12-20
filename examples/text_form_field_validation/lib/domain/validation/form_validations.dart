@@ -9,7 +9,7 @@ Validated<A> equal<A>(NameValue<A> value1, NameValue<A> value2) {
           ArgumentError.value(
             value1.value,
             value1.name,
-            ErrorArgumentsBinding("match2.err", {
+            ErrorArgumentsBinding("equal.err", {
               "name1": value1.name,
               "value1": value1.value.toString(),
               "name2": value2.name,
@@ -26,7 +26,7 @@ Validated<A> notEqual<A>(NameValue<A> value1, NameValue<A> value2) {
           ArgumentError.value(
             value1.value,
             value1.name,
-            ErrorArgumentsBinding("not_match2.err", {
+            ErrorArgumentsBinding("not_equal.err", {
               "name1": value1.name,
               "value1": value1.value.toString(),
               "name2": value2.name,
