@@ -4,4 +4,4 @@ part of applicative_validation_framework;
 typedef Validated<A> = Either<ArgumentError, A>;
 
 /// Alias for function that returns a Validation given a NameValue
-typedef Validation<A> = Validated<A> Function(NameValue);
+typedef Validation<A> = Validated<A> Function(NameValue<A>);
