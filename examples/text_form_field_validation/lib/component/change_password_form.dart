@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:text_form_field_validation/bloc/form_page_cubit.dart';
-import 'package:text_form_field_validation/domain/validation/field_specs.dart';
+import 'package:text_form_field_validation/domain/validation/validator_specs.dart';
 import 'package:text_form_field_validation/localization/validated_localization.dart';
 
 extension FindError on IList<ArgumentError> {

@@ -5,12 +5,11 @@ import 'form_page_state.dart';
 
 class FormPageCubit extends Cubit<FormPageState> {
   static const cleanSubmission = FormPageStateSubmission(
-      submitted: false,
       username: "",
       password: "",
       newPassword1: "",
       newPassword2: "",
-      errors: null);
+      formErrors: null);
 
   final UserRepository _userRepository;
 

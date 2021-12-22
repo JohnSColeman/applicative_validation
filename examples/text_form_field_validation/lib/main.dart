@@ -107,7 +107,7 @@ class _FieldValidatedFormPageState extends State<FieldValidatedFormPage> {
                           submission.password,
                           submission.newPassword1,
                           submission.newPassword2,
-                          submission.errors),
+                          submission.formErrors),
                       changePasswordForm(
                           context,
                           submission.username,

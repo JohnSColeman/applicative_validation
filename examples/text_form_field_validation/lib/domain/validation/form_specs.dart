@@ -1,7 +1,7 @@
 import 'package:applicative_validation/applicative_validation_framework.dart';
 
 import '../update/change_password_request.dart';
-import 'field_specs.dart';
+import 'validator_specs.dart';
 import 'form_validations.dart';
 
 ValidatedNeil<ArgumentError, ChangePasswordRequest> validatePasswordChange(
