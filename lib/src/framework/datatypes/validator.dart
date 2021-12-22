@@ -1,31 +1,33 @@
 part of applicative_validation_framework;
 
-/// Encapsulates the properties of a field and the type of its value
+/// Encapsulates a validation for a field and the type of its value
 ///
 /// A is the underlying type of the validated data
-/// name identifies the field - could be a language key or value for logging
-class Field<A> {
+/// name identifies the associated field - a language key or value for logging
+class Validator<A> {
   final String _name;
 
   final bool _nullable;
 
-  /// this fields validations
   final Iterable<Validation<A>> _validation;
 
   /// this fields name
   String get name => _name;
 
-  /// true of this fields value is nullable (not required)
+  /// true if this fields value is nullable (not required)
   bool get nullable => _nullable;
 
-  Field({required name, required validation, required nullable})
+  Validator({required name, required validation, required nullable})
       : _name = name,
         _validation = validation,
         _nullable = nullable;
 
-  /// create a copy of this field with an alias name
-  Field<A> alias(String alias) =>
-      Field<A>(name: alias, validation: _validation, nullable: _nullable);
+  /// returns a copy of this field with an alias name
+  Validator<A> alias(String alias) =>
+      Validator<A>(name: alias, validation: _validation, nullable: _nullable);
+
+  /// returns a NameValue for this Validator with the given value
+  NameValue<A> value(A value) => NameValue(name, value);
 
   /// returns a validated for this field given field value
   Validated<A> call(A? value) {

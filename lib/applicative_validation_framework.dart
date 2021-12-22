@@ -7,7 +7,7 @@ part 'src/framework/applicative_validation.dart';
 
 part 'src/framework/argument_error_semigroup.dart';
 
-part 'src/framework/datatypes/field.dart';
+part 'src/framework/datatypes/validator.dart';
 
 part 'src/framework/datatypes/named.dart';
 

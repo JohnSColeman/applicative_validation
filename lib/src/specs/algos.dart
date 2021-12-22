@@ -1,9 +1,7 @@
 part of applicative_validation_specs;
 
-bool isCreditCard(String cardNumber) {
-  final cleanCardNumber = cardNumber.replaceAll(RegExp(r'[^0-9]+'), '');
-  return isLuhn(cleanCardNumber);
-}
+bool isCreditCard(String cardNumber) =>
+    isLuhn(cardNumber.replaceAll(RegExp(r'[^0-9]+'), ''));
 
 /// Luhn algorithm check
 bool isLuhn(String number) {
@@ -20,5 +18,5 @@ bool isLuhn(String number) {
     sum += d;
     flag = !flag;
   }
-  return (sum % 10 == 0);
+  return (number != "" && sum % 10 == 0);
 }

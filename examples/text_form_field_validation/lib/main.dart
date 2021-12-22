@@ -55,16 +55,16 @@ class _FieldValidatedFormPageState extends State<FieldValidatedFormPage> {
   void listener(
       BuildContext context,
       FormCondition<FormPageStateSubmissionFailure, FormPageStateSubmission>
-          form) {
-    form.onOutcome<void>(
-        (failure) => failure.onStatus<void>(
+          formCondition) {
+    formCondition.outcome<void>(
+        (failure) => failure.status<void>(
             () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(tr(failure.failureMessage)),
                 backgroundColor: Colors.red.shade400)),
             () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(tr(failure.failureMessage)),
                 backgroundColor: Colors.orange.shade400))),
-        (submission) => submission.onStatus<void>(
+        (submission) => submission.status<void>(
             () {},
             () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(tr("submission_success.msg")),
@@ -86,29 +86,29 @@ class _FieldValidatedFormPageState extends State<FieldValidatedFormPage> {
             key: _formKey,
             child: BlocConsumer<FormPageCubit, FormPageState>(
               listener: (context, state) => listener(context, state),
-              builder: (context, state) => state.onOutcome<Widget>(
-                  (failure) => failure.onStatus(
-                      () => changePasswordForm(
+              builder: (context, state) => state.outcome<Widget>(
+                  (failure) => failure.status(
+                      changePasswordForm(
                           context,
                           failure.username,
                           failure.password,
                           failure.newPassword1,
                           failure.newPassword2),
-                      () => changePasswordForm(
+                      changePasswordForm(
                           context,
                           failure.username,
                           failure.password,
                           failure.newPassword1,
                           failure.newPassword2)),
-                  (submission) => submission.onStatus(
-                      () => changePasswordForm(
+                  (submission) => submission.status(
+                      changePasswordForm(
                           context,
                           submission.username,
                           submission.password,
                           submission.newPassword1,
                           submission.newPassword2,
                           submission.errors),
-                      () => changePasswordForm(
+                      changePasswordForm(
                           context,
                           submission.username,
                           submission.password,

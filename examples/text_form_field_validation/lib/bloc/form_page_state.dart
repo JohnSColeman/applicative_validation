@@ -62,13 +62,13 @@ class FormPageStateSubmission extends FormPageState {
   }
 
   @override
-  B onOutcome<B>(
+  B outcome<B>(
           B Function(FormPageStateSubmissionFailure failure) failureEffect,
           B Function(FormPageStateSubmission submission) readyEffect) =>
       readyEffect(this);
 
   @override
-  B onStatus<B>(B Function() recoverEffect, B Function() continueEffect) =>
+  B status<B>(B Function() recoverEffect, B Function() continueEffect) =>
       submitted ? continueEffect() : recoverEffect();
 
   @override
@@ -114,13 +114,13 @@ class FormPageStateSubmissionFailure extends FormPageStateSubmission {
             errors: errors);
 
   @override
-  B onOutcome<B>(
+  B outcome<B>(
           B Function(FormPageStateSubmissionFailure failure) failureEffect,
           B Function(FormPageStateSubmission submission) readyEffect) =>
       failureEffect(this);
 
   @override
-  B onStatus<B>(B Function() recoverEffect, B Function() continueEffect) =>
+  B status<B>(B Function() recoverEffect, B Function() continueEffect) =>
       failureSeverity == FailureSeverity.error
           ? recoverEffect()
           : continueEffect();

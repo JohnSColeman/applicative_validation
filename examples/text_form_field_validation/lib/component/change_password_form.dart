@@ -13,11 +13,11 @@ extension FindError on IList<ArgumentError> {
       find((error) => error.name == name).toNullable();
 }
 
-Widget changePasswordForm(BuildContext context, String? username,
+Widget Function() changePasswordForm(BuildContext context, String? username,
     String? password, String? password1, String? password2,
     [IList<ArgumentError>? errors]) {
   final cubit = context.read<FormPageCubit>();
-  return Column(
+  return () => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       TextFormField(
@@ -25,7 +25,7 @@ Widget changePasswordForm(BuildContext context, String? username,
           decoration: InputDecoration(
               labelText: 'Username', errorText: tre(errors?.of("username"))),
           inputFormatters: [LengthLimitingTextInputFormatter(15)],
-          validator: (value) => trv(usernameField(value)),
+          validator: (value) => trv(usernameValidator(value)),
           onSaved: (value) => cubit.changeUsername(value!)),
       TextFormField(
           initialValue: password,
@@ -34,7 +34,7 @@ Widget changePasswordForm(BuildContext context, String? username,
               errorText: tre(errors?.of("password"))),
           inputFormatters: [LengthLimitingTextInputFormatter(12)],
           validator: (value) =>
-              trvk("password.err", passwordField(value)),
+              trvk("password.err", passwordValidator(value)),
           onSaved: (value) => cubit.changePassword(value!)),
       TextFormField(
           initialValue: password1,
@@ -43,7 +43,7 @@ Widget changePasswordForm(BuildContext context, String? username,
               errorText: tre(errors?.of("newPassword1"))),
           inputFormatters: [LengthLimitingTextInputFormatter(12)],
           validator: (value) =>
-              trvk("password.err", newPassword1Field(value)),
+              trvk("password.err", newPassword1Validator(value)),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           onSaved: (value) => cubit.changePassword1(value!)),
       TextFormField(
@@ -53,7 +53,7 @@ Widget changePasswordForm(BuildContext context, String? username,
               errorText: tre(errors?.of("newPassword2"))),
           inputFormatters: [LengthLimitingTextInputFormatter(12)],
           validator: (value) =>
-              trvk("password.err", newPassword2Field(value)),
+              trvk("password.err", newPassword2Validator(value)),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           onSaved: (value) => cubit.changePassword2(value!)),
     ],

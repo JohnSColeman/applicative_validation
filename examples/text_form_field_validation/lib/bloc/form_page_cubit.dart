@@ -16,25 +16,25 @@ class FormPageCubit extends Cubit<FormPageState> {
 
   FormPageCubit(this._userRepository) : super(cleanSubmission);
 
-  void changeUsername(String username) => state.onOutcome(
+  void changeUsername(String username) => state.outcome(
       (failure) => emit(cleanSubmission.copyWith(username: username)),
       (submission) => emit(submission.copyWith(username: username)));
 
-  void changePassword(String password) => state.onOutcome(
+  void changePassword(String password) => state.outcome(
       (failure) => emit(cleanSubmission.copyWith(password: password)),
       (submission) => emit(submission.copyWith(password: password)));
 
-  void changePassword1(String password) => state.onOutcome(
+  void changePassword1(String password) => state.outcome(
       (failure) => emit(cleanSubmission.copyWith(newPassword1: password)),
       (submission) => emit(submission.copyWith(newPassword1: password)));
 
-  void changePassword2(String password) => state.onOutcome(
+  void changePassword2(String password) => state.outcome(
       (failure) => emit(cleanSubmission.copyWith(newPassword2: password)),
       (submission) => emit(submission.copyWith(newPassword2: password)));
 
   Future submitForm() async {
     print("validate");
-    state.onOutcome((failure) => {}, (submission) {
+    state.outcome((failure) => {}, (submission) {
       validatePasswordChange(submission.username, submission.password,
               submission.newPassword1, submission.newPassword2)
           .leftMap((errors) => emit(submission.fail(errors)))

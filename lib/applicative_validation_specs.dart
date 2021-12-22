@@ -5,4 +5,4 @@ import 'package:applicative_validation/applicative_validation_render.dart';
 import 'package:dartz/dartz.dart';
 
 part 'src/specs/generic_validations.dart';
-part 'src/specs/util.dart';
+part 'src/specs/algos.dart';

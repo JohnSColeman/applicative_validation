@@ -10,13 +10,13 @@ ValidatedNeil<ArgumentError, ChangePasswordRequest> validatePasswordChange(
         String newPassword1,
         String newPassword2) =>
     validate4<String, String, String, String, ChangePasswordRequest>(
-        usernameField(username),
-        passwordField(password),
-        newPassword1Field(newPassword1) &
-            notEqual(NameValue("newPassword1", newPassword1),
-                NameValue("password", password)),
-        newPassword2Field(newPassword2) &
-            equal(NameValue("newPassword2", newPassword2),
-                NameValue("newPassword1", newPassword1)),
+        usernameValidator(username),
+        passwordValidator(password),
+        newPassword1Validator(newPassword1) &
+            notEqual(newPassword1Validator.value(newPassword1),
+                passwordValidator.value(password)),
+        newPassword2Validator(newPassword2) &
+            equal(newPassword2Validator.value(newPassword2),
+                newPassword1Validator.value(newPassword1)),
         (u, p, p1, p2) => ChangePasswordRequest(
             username: u, password: p, newPassword1: p1, newPassword2: p2));
