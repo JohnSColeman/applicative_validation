@@ -1,8 +1,8 @@
+import 'package:applicative_validation/applicative_validation_forms.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:text_form_field_validation/domain/validation/form_specs.dart';
 import 'package:text_form_field_validation/repository/user_repository.dart';
 
-import 'form_model.dart';
 import 'form_page_state.dart';
 
 class FormPageCubit extends Cubit<FormModel<FormPageState>> {

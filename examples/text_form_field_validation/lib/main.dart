@@ -1,10 +1,9 @@
+import 'package:applicative_validation/applicative_validation_forms.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:text_form_field_validation/repository/user_repository.dart';
 
-import 'bloc/form_condition.dart';
-import 'bloc/form_model.dart';
 import 'bloc/form_page_cubit.dart';
 import 'bloc/form_page_state.dart';
 import 'component/change_password_form.dart';

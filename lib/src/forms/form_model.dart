@@ -1,7 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
-
-import 'form_condition.dart';
+part of applicative_validation_forms;
 
 /// Enumerates the different stats of a form.
 enum FormStatus { clear, invalid, warning, failure, success }
@@ -80,22 +77,4 @@ class FormModel<F extends Equatable> implements FormCondition<F>, Equatable {
 FormModel<F> formModel<F extends Equatable>(F form) =>
     FormModel.withState(form);
 
-/// Error thrown when a form submission fails.
-class SubmissionError extends Error {
-  /// Message describing the submission error.
-  final Object? message;
 
-  /// The underlying source of this error.
-  final Error? error;
-
-  /// Creates a submission error with the provided [message].
-  SubmissionError(this.message, [this.error]);
-
-  @override
-  String toString() {
-    if (message != null) {
-      return "Submission failed: ${Error.safeToString(message)}";
-    }
-    return "Submission failed";
-  }
-}

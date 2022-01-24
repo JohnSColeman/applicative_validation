@@ -1,4 +1,4 @@
-import 'form_model.dart';
+part of applicative_validation_forms;
 
 /// Defines the behaviours for handling a forms condition.
 ///
