@@ -11,7 +11,7 @@ abstract class FormCondition<F> {
   B invalidated<B>(
       B Function(Iterable<ArgumentError>) invalidEffect, B Function() otherEffect);
 
-  /// returns a type B using either the given warning effect orl other effect
+  /// returns a type B using either the given warning effect or other effect
   B warned<B>(B Function(Iterable<SubmissionError>) warningEffect,
       B Function() otherEffect);
 
