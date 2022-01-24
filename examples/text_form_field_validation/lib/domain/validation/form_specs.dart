@@ -4,6 +4,9 @@ import '../update/change_password_request.dart';
 import 'validator_specs.dart';
 import 'form_validations.dart';
 
+/// Validates a password change
+///
+/// returns a ValidatedNeil of either ArgumentErrors or a ChangePasswordRequest
 ValidatedNeil<ArgumentError, ChangePasswordRequest> validatePasswordChange(
         String username,
         String password,
