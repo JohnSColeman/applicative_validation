@@ -1,12 +1,21 @@
+import 'form_model.dart';
+
 /// Defines the behaviours for handling a forms condition.
 ///
-/// type F is the forms submission failure type
-/// type R is forms ready type
-abstract class FormCondition<F, R> {
-  /// returns a type B using either the given failure effect or ready effect
-  B outcome<B>(B Function(F failure) failureEffect,
-      B Function(R submission) readyEffect);
+/// type F is the forms state type
+abstract class FormCondition<F> {
+  /// returns a type B using either the given ready effect or other effect
+  B readied<B>(B Function(F) readyEffect, B Function(F, Iterable<Error>) otherEffect);
 
-  /// returns a type B using either the given recover effect or continue effect
-  B status<B>(B Function() recoverEffect, B Function() continueEffect);
+  /// returns a type B using either the given invalid effect or other effect
+  B invalidated<B>(
+      B Function(Iterable<ArgumentError>) invalidEffect, B Function() otherEffect);
+
+  /// returns a type B using either the given warning effect orl other effect
+  B warned<B>(B Function(Iterable<SubmissionError>) warningEffect,
+      B Function() otherEffect);
+
+  /// returns a type B using either the given failure effect or other effect
+  B failed<B>(B Function(Iterable<SubmissionError>) failureEffect,
+      B Function() otherEffect);
 }

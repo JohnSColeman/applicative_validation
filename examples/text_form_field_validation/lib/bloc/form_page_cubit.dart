@@ -1,56 +1,58 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:text_form_field_validation/domain/validation/form_specs.dart';
 import 'package:text_form_field_validation/repository/user_repository.dart';
+
+import 'form_model.dart';
 import 'form_page_state.dart';
 
-class FormPageCubit extends Cubit<FormPageState> {
-  static const cleanSubmission = FormPageStateSubmission(
-      username: "",
-      password: "",
-      newPassword1: "",
-      newPassword2: "",
-      formErrors: null);
+class FormPageCubit extends Cubit<FormModel<FormPageState>> {
+  static FormPageState clearSubmission = const FormPageState(
+      username: "", password: "", newPassword1: "", newPassword2: "");
 
   final UserRepository _userRepository;
 
-  FormPageCubit(this._userRepository) : super(cleanSubmission);
+  FormPageCubit(this._userRepository) : super(formModel(clearSubmission));
 
-  void changeUsername(String username) => state.outcome(
-      (failure) => emit(cleanSubmission.copyWith(username: username)),
-      (submission) => emit(submission.copyWith(username: username)));
+  void changeUsername(String username) => state.readied(
+      (form) => emit(formModel(form.copyWith(username: username))),
+      (form, errors) =>
+          emit(formModel(clearSubmission.copyWith(username: username))));
 
-  void changePassword(String password) => state.outcome(
-      (failure) => emit(cleanSubmission.copyWith(password: password)),
-      (submission) => emit(submission.copyWith(password: password)));
+  void changePassword(String password) => state.readied(
+      (form) => emit(formModel(form.copyWith(password: password))),
+      (form, errors) =>
+          emit(formModel(clearSubmission.copyWith(password: password))));
 
-  void changePassword1(String password) => state.outcome(
-      (failure) => emit(cleanSubmission.copyWith(newPassword1: password)),
-      (submission) => emit(submission.copyWith(newPassword1: password)));
+  void changePassword1(String password) => state.readied(
+      (form) => emit(formModel(form.copyWith(newPassword1: password))),
+      (form, errors) =>
+          emit(formModel(clearSubmission.copyWith(newPassword1: password))));
 
-  void changePassword2(String password) => state.outcome(
-      (failure) => emit(cleanSubmission.copyWith(newPassword2: password)),
-      (submission) => emit(submission.copyWith(newPassword2: password)));
+  void changePassword2(String password) => state.readied(
+      (form) => emit(formModel(form.copyWith(newPassword2: password))),
+      (form, errors) =>
+          emit(formModel(clearSubmission.copyWith(newPassword2: password))));
 
   Future submitForm() async {
-    print("validate");
-    state.outcome((failure) => {}, (submission) {
+    state.readied((submission) {
       validatePasswordChange(submission.username, submission.password,
               submission.newPassword1, submission.newPassword2)
-          .leftMap((errors) => emit(submission.fail(errors)))
+          .leftMap((errors) => emit(state.invalidate(errors.toList())))
           .map<void>((changePasswordRequest) async {
         final response = await _userRepository.verifyCredential(
             submission.username, submission.password);
-        print(response);
         response.fold<void>(
-            (ioError) => emit(submission.error("io_error.err")),
+            (ioError) => emit(state.fail(_submitError("io_error.err"))),
             (ioResponse) => ioResponse.fold<void>(
                   (endpointWarning) =>
-                      emit(submission.warning("user_not_found.err")),
+                      emit(state.warn(_submitError("user_not_found.err"))),
                   (isUserAuthorized) => isUserAuthorized
-                      ? emit(submission.pass())
-                      : emit(submission.warning("user_invalid.err")),
+                      ? emit(state.ready())
+                      : emit(state.warn(_submitError("user_invalid.err"))),
                 ));
       });
-    });
+    }, (form, errors) => null);
   }
+
+  List<SubmissionError> _submitError(String key) => [SubmissionError(key)];
 }

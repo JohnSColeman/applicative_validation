@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:text_form_field_validation/repository/user_repository.dart';
 
 import 'bloc/form_condition.dart';
+import 'bloc/form_model.dart';
 import 'bloc/form_page_cubit.dart';
 import 'bloc/form_page_state.dart';
 import 'component/change_password_form.dart';
@@ -52,23 +53,22 @@ class FieldValidatedFormPage extends StatefulWidget {
 class _FieldValidatedFormPageState extends State<FieldValidatedFormPage> {
   final _formKey = GlobalKey<FormState>();
 
+  // listener will deal with submission warnings and failures
   void listener(
-      BuildContext context,
-      FormCondition<FormPageStateSubmissionFailure, FormPageStateSubmission>
-          formCondition) {
-    formCondition.outcome<void>(
-        (failure) => failure.status<void>(
-            () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(tr(failure.failureMessage)),
-                backgroundColor: Colors.red.shade400)),
-            () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(tr(failure.failureMessage)),
+      BuildContext context, FormCondition<FormPageState> formCondition) {
+    formCondition.warned(
+        (warnings) => warnings.map((warning) => ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(
+                content: Text(tr(warning.message.toString())),
                 backgroundColor: Colors.orange.shade400))),
-        (submission) => submission.status<void>(
-            () {},
-            () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(tr("submission_success.msg")),
-                backgroundColor: Colors.green.shade400))));
+        () {});
+
+    formCondition.failed(
+        (failures) => failures.map((failure) => ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(
+                content: Text(tr(failure.message.toString())),
+                backgroundColor: Colors.red.shade400))),
+        () {});
   }
 
   @override
@@ -84,37 +84,18 @@ class _FieldValidatedFormPageState extends State<FieldValidatedFormPage> {
         children: <Widget>[
           Form(
             key: _formKey,
-            child: BlocConsumer<FormPageCubit, FormPageState>(
-              listener: (context, state) => listener(context, state),
-              builder: (context, state) => state.outcome<Widget>(
-                  (failure) => failure.status(
-                      changePasswordForm(
-                          context,
-                          failure.username,
-                          failure.password,
-                          failure.newPassword1,
-                          failure.newPassword2),
-                      changePasswordForm(
-                          context,
-                          failure.username,
-                          failure.password,
-                          failure.newPassword1,
-                          failure.newPassword2)),
-                  (submission) => submission.status(
-                      changePasswordForm(
-                          context,
-                          submission.username,
-                          submission.password,
-                          submission.newPassword1,
-                          submission.newPassword2,
-                          submission.formErrors),
-                      changePasswordForm(
-                          context,
-                          submission.username,
-                          submission.password,
-                          submission.newPassword1,
-                          submission.newPassword2))),
-            ),
+            child: BlocConsumer<FormPageCubit, FormModel<FormPageState>>(
+                listener: (context, state) => listener(context, state),
+                builder: (context, state) => state.readied<Widget>(
+                    (form) => changePasswordForm(context, form.username,
+                        form.password, form.newPassword1, form.newPassword2),
+                    (form, errors) => changePasswordForm(
+                        context,
+                        form.username,
+                        form.password,
+                        form.newPassword1,
+                        form.newPassword2,
+                        errors))),
           ),
         ],
       ),

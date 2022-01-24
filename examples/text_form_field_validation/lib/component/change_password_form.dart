@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,17 +6,22 @@ import 'package:text_form_field_validation/bloc/form_page_cubit.dart';
 import 'package:text_form_field_validation/domain/validation/validator_specs.dart';
 import 'package:text_form_field_validation/localization/validated_localization.dart';
 
-extension FindError on IList<ArgumentError> {
+extension FindError on Iterable<Error> {
   /// returns the error of the given name for this list of errors
-  ArgumentError? of(String name) =>
-      find((error) => error.name == name).toNullable();
+  ArgumentError? of(String name) {
+    try {
+      return whereType<ArgumentError>().firstWhere((error) => error.name == name);
+    } on StateError {
+      return null;
+    }
+  }
 }
 
-Widget Function() changePasswordForm(BuildContext context, String? username,
+Widget changePasswordForm(BuildContext context, String? username,
     String? password, String? password1, String? password2,
-    [IList<ArgumentError>? errors]) {
+    [Iterable<Error>? errors]) {
   final cubit = context.read<FormPageCubit>();
-  return () => Column(
+  return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       TextFormField(
@@ -33,8 +37,7 @@ Widget Function() changePasswordForm(BuildContext context, String? username,
               labelText: 'Current Password',
               errorText: tre(errors?.of("password"))),
           inputFormatters: [LengthLimitingTextInputFormatter(12)],
-          validator: (value) =>
-              trvk("password.err", passwordValidator(value)),
+          validator: (value) => trvk("password.err", passwordValidator(value)),
           onSaved: (value) => cubit.changePassword(value!)),
       TextFormField(
           initialValue: password1,

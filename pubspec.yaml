@@ -2,10 +2,10 @@ name: applicative_validation
 
 version: 0.0.1
 
-description: Provides a functional domain framework for handling field and form errors.
+description: Provides a functional framework for handling field and form errors.
 
 environment:
-  sdk: ">=2.13.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
   flutter:
