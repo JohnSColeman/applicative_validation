@@ -32,4 +32,41 @@ class NameValue<A> extends Named {
 
   @override
   int get hashCode => _name.hashCode ^ _value.hashCode;
+
+
+  /// Validates that this name value and the other name value are equal
+  Validated<A> equal(NameValue<A> other) {
+    return value == other.value
+        ? right(value)
+        : left(
+      ArgumentError.value(
+        value,
+        name,
+        ErrorArgumentsBinding("equal.err", {
+          "name1": name,
+          "value1": value.toString(),
+          "name2": other.name,
+          "value2": other.value.toString()
+        }),
+      ),
+    );
+  }
+
+  /// Validates that this name value and the other name value are not equal
+  Validated<A> notEqual(NameValue<A> other) {
+    return value != other.value
+        ? right(value)
+        : left(
+      ArgumentError.value(
+        value,
+        name,
+        ErrorArgumentsBinding("not_equal.err", {
+          "name1": name,
+          "value1": value.toString(),
+          "name2": other.name,
+          "value2": other.value.toString()
+        }),
+      ),
+    );
+  }
 }
