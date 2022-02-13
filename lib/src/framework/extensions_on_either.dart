@@ -26,10 +26,9 @@ extension EitherSemigroupApplicative<E, A> on Either<E, A?> {
 /// Extension methods to give Validated operators
 extension ValidatedSemigroupApplicativeOperator<A> on Validated<A> {
   ///  applicative operator - aggregates ArgumentErrors using default semigroup
-  Either<ArgumentError, A?> operator &(Either<ArgumentError, A?> other) =>
+  Validated<A?> operator &(Validated<A?> other) =>
       aps(other.map((a) => id), argumentErrorSi);
 
   ///  flatmap operator - terminate validation on error or continue with other
-  Either<ArgumentError, A?> operator +(Either<ArgumentError, A?> other) =>
-      flatMap((_) => this & other);
+  Validated<A?> operator +(Validated<A?> other) => flatMap((_) => this & other);
 }
