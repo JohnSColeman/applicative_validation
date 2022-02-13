@@ -55,19 +55,20 @@ class _FieldValidatedFormPageState extends State<FieldValidatedFormPage> {
   // listener will deal with submission warnings and failures
   void listener(
       BuildContext context, FormCondition<FormPageState> formCondition) {
-    formCondition.warned(
-        (warnings) => warnings.map((warning) => ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(
-                content: Text(tr(warning.message.toString())),
-                backgroundColor: Colors.orange.shade400))),
-        () {});
-
-    formCondition.failed(
-        (failures) => failures.map((failure) => ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(
-                content: Text(tr(failure.message.toString())),
-                backgroundColor: Colors.red.shade400))),
-        () {});
+    formCondition.warned((warnings) {
+      for (var warning in warnings) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(tr(warning.message.toString())),
+            backgroundColor: Colors.orange.shade400));
+      }
+    }, () {});
+    formCondition.failed((failures) {
+      for (var failure in failures) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(tr(failure.message.toString())),
+            backgroundColor: Colors.red.shade400));
+      }
+    }, () {});
   }
 
   @override
@@ -103,9 +104,6 @@ class _FieldValidatedFormPageState extends State<FieldValidatedFormPage> {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
             cubit.submitForm();
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Form submitted')),
-            );
           }
         },
         tooltip: 'press to submit',
