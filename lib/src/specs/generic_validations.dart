@@ -7,25 +7,27 @@ final emailPattern = RegExp(
     r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 final repeatingPattern = RegExp(r'^(?:(.)(?!\1\1))+$');
 
-Validation<String> notEmpty() =>
-    (NameValue<String> nameValue) => nameValue.value.trim().isNotEmpty
-        ? right(nameValue.value)
-        : left(ArgumentError.value(
+Validation<String> notEmpty() {
+  return (NameValue<String> nameValue) => nameValue.value.trim().isNotEmpty
+      ? right(nameValue.value)
+      : left(ArgumentError.value(
+          nameValue.value,
+          nameValue.name,
+          ErrorArgumentsBinding("empty.err", {}),
+        ));
+}
+
+Validation<String> alpha() {
+  return (NameValue<String> nameValue) => alphaPattern.hasMatch(nameValue.value)
+      ? right(nameValue.value)
+      : left(
+          ArgumentError.value(
             nameValue.value,
             nameValue.name,
-            ErrorArgumentsBinding("empty.err", {}),
-          ));
-
-Validation<String> alpha() =>
-    (NameValue<String> nameValue) => alphaPattern.hasMatch(nameValue.value)
-        ? right(nameValue.value)
-        : left(
-            ArgumentError.value(
-              nameValue.value,
-              nameValue.name,
-              ErrorArgumentsBinding("alpha.err", {}),
-            ),
-          );
+            ErrorArgumentsBinding("alpha.err", {}),
+          ),
+        );
+}
 
 Validation<String> alphanumeric() {
   return (NameValue<String> nameValue) =>
