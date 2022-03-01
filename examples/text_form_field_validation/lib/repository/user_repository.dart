@@ -19,7 +19,7 @@ class UserRepository {
   Future<Either<IoError, Either<EndpointWarning, bool>>> verifyCredential(
       String username, String password) {
     return Future.delayed(const Duration(seconds: 2), () {
-      if (Random().nextBool()) return left(IoError()); // simulate failure
+      //if (Random().nextBool()) return left(IoError()); // simulate failure
       if (users.containsKey(username)) {
         return right(right(users[username] == password));
       }
