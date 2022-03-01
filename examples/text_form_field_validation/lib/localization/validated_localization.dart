@@ -2,13 +2,13 @@ import 'package:applicative_validation/applicative_validation_render.dart';
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-/// creates an error message by joining each errors transformed error value
+/// creates an error message by joining each errors translated error value
 String? tre<A>(ArgumentError? error) => error
     ?.renderToList((binding) => tr(binding.key, namedArgs: binding.namedArgs))
     .toList()
     .join(", ");
 
-/// creates an error message by joining each errors transformed error value
+/// creates an error message by joining each errors translated error value
 String? trv<A>(Either<ArgumentError, A?> validated) => validated.fold(
     (error) => error
         .renderToList(
