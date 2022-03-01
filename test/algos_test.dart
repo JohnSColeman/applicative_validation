@@ -1,6 +1,7 @@
 import 'package:applicative_validation/applicative_validation_specs.dart';
 import 'package:test/test.dart';
 
+/// test the algos
 void main() {
   test("given valid credit card number then is credit card method returns true",
       () {
