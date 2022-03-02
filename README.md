@@ -1,6 +1,9 @@
 # Applicative Validation
 A client and server side library for composable declarative validation using applicative with [Dartz](https://pub.dev/packages/dartz).
 
+For enterprise applications with a large amount of form input that requires static validation that can be formalised and
+provisioned as an independent package to eliminate duplication and inconsistency.
+
 ## Usage
 A Validated is a Dartz Either that returns an ArgumentError for a failed validation
 or an optional type of A? for a success.
