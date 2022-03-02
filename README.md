@@ -11,7 +11,7 @@ or an optional type of A? for a success.
 /// Alias for Either with left type ArgumentError right validate value type A
 typedef Validated<A> = Either<ArgumentError, A?>;
 
-/// Alias for function that returns a Validation given a NameValue
+/// Alias for function that returns a Validated given a NameValue
 typedef Validation<A> = Validated<A> Function(NameValue<A>);
 ```
 A Validation is a function encapsulating some imperative logic applied to the given NameValue:
@@ -40,7 +40,6 @@ extension ValidatedSemigroupApplicativeOperator<A> on Validated<A> {
 ```
 The `+` operator can be used like an or `||` operator to group associated validations:
 
-
 ### Add dependency
 
 ### Validators
@@ -51,7 +50,7 @@ final passwordValidator = Validator<String>(
     name: "password",
     validation: [minLength(8), maxLength(12), noWhiteSpace(), nonRepeating()]);
 ```
-Use validator for a form field:
+Use a validator for the form field validator parameter and combine with your own internationalisation solution:
 ```dart
       TextFormField(
           initialValue: password,
@@ -68,12 +67,25 @@ to handle success or failure of the form submission:
 class FormPageCubit extends Cubit<FormModel<FormPageState>>
     with FormSubmission<ChangePasswordRequest> {
 
-  void changePassword(String password) => state.readied(
-    (form) => emit(formModel(form.copyWith(password: password))),
-    (form, errors) =>
-      emit(formModel(initState.copyWith(password: password))));
-  
-    }
-    
-    
+  // transition to a new state with password
+  void changePassword(String password) =>
+      state.readied(
+              (form) => emit(formModel(form.copyWith(password: password))),
+              (form, errors) =>
+              emit(formModel(initState.copyWith(password: password))));
+
+  @override
+  ValidatedNeil<ArgumentError, ChangePasswordRequest?> validateSubmission() =>
+      validatePasswordChange(state.form.username, state.form.password,
+          state.form.newPassword1, state.form.newPassword2);
+
+  @override
+  void rejectSubmission(Cons<ArgumentError> errors) =>
+      emit(state.invalidate(errors.toList()));
+
+  @override
+  Future<void> processSubmission(ChangePasswordRequest submission) async {
+    // do something with valid form data
+  }
+}
 ```
